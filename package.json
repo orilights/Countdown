@@ -1,0 +1,33 @@
+{
+  "name": "countdown",
+  "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lintf": "eslint . --fix"
+  },
+  "dependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.4.22"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.14.0",
+    "@types/node": "^20.12.7",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-plugin-tailwindcss": "^3.15.1",
+    "postcss": "^8.4.38",
+    "sass": "^1.75.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "vite": "^5.2.9",
+    "vue-tsc": "^2.0.13"
+  }
+}
