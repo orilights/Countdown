@@ -1,7 +1,5 @@
-export const Minute = 60
-export const Hour = 60 * Minute
-export const Day = 24 * Hour
-const RemindAfter = Day
+import { Day, Hour, Minute, RemindAfter } from '@/constants'
+
 export const TimePresets = [
   {
     text: '1小时后',
@@ -52,6 +50,34 @@ export function toTimestamp(time: string) {
   return Math.floor(new Date(time).getTime() / 1000)
 }
 
+export function getLeftTime(endTime: number) {
+  return endTime - getNow()
+}
+
+export function formatTime(timestamp: number) {
+  const days = Math.floor(timestamp / Day)
+  const hours = Math.floor((timestamp % Day) / Hour)
+  const minutes = Math.floor((timestamp % Hour) / Minute)
+  const seconds = Math.floor(timestamp % Minute)
+  let display = ''
+
+  if (days >= 1)
+    display = `${days} 天`
+  else if (hours >= 1)
+    display = `${hours} 小时`
+  else if (minutes >= 1)
+    display = `${minutes} 分钟`
+  else if (seconds > 0)
+    display = `${seconds} 秒`
+
+  const full = `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`
+  return {
+    value: timestamp,
+    full,
+    display: timestamp <= 0 ? '已到期' : display,
+  }
+}
+
 export function toDatetime(timestamp: number, dateSeparator: string = 'ch') {
   const date = new Date(timestamp * 1000)
   const year = date.getFullYear()
@@ -69,4 +95,14 @@ export function getWeek(timestamp: number) {
   const date = new Date(timestamp * 1000)
   const week = ['日', '一', '二', '三', '四', '五', '六']
   return `星期${week[date.getDay()]}`
+}
+
+export function exportFile(data: string, filename = 'export-{ts}.json') {
+  const blob = new Blob([data], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename.replace('{ts}', Date.now().toString())
+  a.click()
+  URL.revokeObjectURL(url)
 }

@@ -8,5 +8,6 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CountdownItem: typeof import('./src/components/CountdownItem.vue')['default']
+    CountdownList: typeof import('./src/components/CountdownList.vue')['default']
   }
 }

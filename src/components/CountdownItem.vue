@@ -1,17 +1,10 @@
 <script setup lang="ts">
+import type { CountdownItemData } from '@/types'
 import { TimePresets, getWeek, isExpireSoon, isExpired, toDatetime, toTimestamp } from '@/utils'
 
 const props = defineProps<{
-  item: {
-    id: number
-    name: string
-    endTime: number
-    leftTime: {
-      value: number
-      full: string
-      display: string
-    }
-  }
+  item: CountdownItemData
+  readonly: boolean
 }>()
 
 const emits = defineEmits(['updateItem', 'deleteItem'])
@@ -68,11 +61,15 @@ function handleUpdateItem() {
           {{ item.leftTime.display }}
         </div>
       </div>
-      <button class="absolute bottom-[-4px] right-0 hidden text-sm text-gray-500 group-hover:inline" @click="$emit('deleteItem', item.id)">
+      <button
+        v-if="!readonly"
+        class="absolute bottom-[-4px] right-0 hidden text-sm text-gray-500 group-hover:inline" @click="$emit('deleteItem', item.id)"
+      >
         删除
       </button>
     </div>
     <div
+      v-if="!readonly"
       ref="editBoxRef" class="duration-301 overflow-hidden transition-all"
       :style="{
         height: editMode ? `${editBoxRef?.scrollHeight}px` : '0',
